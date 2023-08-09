@@ -61,7 +61,8 @@ export function getModelsByUserIdDB(userId) {
 export function getModelsDB() {
     return db.query(`
         SELECT animals.id, animals.name, animals.description, photos."urlImage" 
-        as "mainImage" FROM photos JOIN animals ON photos.id = animals."mainPhotoId";   
+        as "mainImage" FROM photos JOIN animals ON photos.id = animals."mainPhotoId" 
+        WHERE animals.active = true;   
     `)
 }
 
