@@ -32,7 +32,7 @@ export async function signIn(req, res){
         const token = uuid();
         await createSessionDB(user.rows[0].id, token);
         
-        res.send({token});
+        res.send({token, name: user.rows[0].name});
     } catch (error) {
         res.status(500).send(error.message);
     }
