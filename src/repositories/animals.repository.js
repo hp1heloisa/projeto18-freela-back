@@ -43,11 +43,13 @@ export function insertPhotosDB(photos, animalId){
 }
 
 export function getModelByIdDB(id) {
-    return db.query(`      
-        SELECT animals.id, animals.name, breeds.breed, animals.description, animals."userId",animals.active,
-        animals."mainPhotoId", array_agg(json_build_object('id', photos.id, 'urlImage',photos."urlImage")) 
-        as "animalPhotos" FROM photos JOIN animals ON animals.id=photos."animalId" JOIN breeds ON 
-        animals."breedId" = breeds.id WHERE "animalId" = $1 GROUP BY animals.id, breeds.breed;
+    return db.query(`           
+        SELECT animals.id, animals.name, breeds.breed, animals.description, users.name as tutor, users.email,
+        users."phoneNumber", animals.active, animals."mainPhotoId", array_agg(json_build_object('id', 
+        photos.id, 'urlImage',photos."urlImage")) as "animalPhotos" FROM photos JOIN animals ON 
+        animals.id=photos."animalId" JOIN breeds ON animals."breedId" = breeds.id JOIN users ON 
+        animals."userId"=users.id WHERE "animalId" = $1 GROUP BY animals.id, breeds.breed, users.name, 
+        users.email, users."phoneNumber";
     `, [id])
 }
 
