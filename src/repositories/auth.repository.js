@@ -7,3 +7,7 @@ export function createSessionDB(userId, token){
 export function findSessionDB(token) {
     return db.query(`SELECT * FROM sessions WHERE token=$1;`, [token]);
 }
+
+export function deleteSessionDB(userId){
+    return db.query(`DELETE FROM sessions WHERE "userId"=$1`, [userId]);
+}

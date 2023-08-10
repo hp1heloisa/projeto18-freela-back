@@ -1,7 +1,7 @@
 import { createUserDB, getUserByCpfDB, getUserByEmailDB } from "../repositories/users.repository.js";
 import bcrypt from "bcrypt";
 import { v4 as uuid } from "uuid"; 
-import { createSessionDB } from "../repositories/auth.repository.js";
+import { createSessionDB, deleteSessionDB } from "../repositories/auth.repository.js";
 
 export async function signUp(req, res){
     const { name, cpf, email, password, phoneNumber} = req.body;
@@ -37,4 +37,14 @@ export async function signIn(req, res){
         res.status(500).send(error.message);
     }
 
+}
+
+export async function logOut(req, res) {
+    const { userId } = res.locals;
+    try {
+        await deleteSessionDB(userId);
+        res.sendStatus(204);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 }
