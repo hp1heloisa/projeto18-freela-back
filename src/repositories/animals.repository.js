@@ -55,8 +55,8 @@ export function getModelByIdDB(id) {
 
 export function getModelsByUserIdDB(userId) {
     return db.query(`
-        SELECT animals.id, animals.name, animals.description, photos."urlImage" as "mainImage"
-        FROM photos JOIN animals ON photos.id = animals."mainPhotoId" WHERE "userId"=$1;
+        SELECT animals.id, animals.name, animals.description, animals.active photos."urlImage" as "mainImage"
+        FROM photos JOIN animals ON photos.id = animals."mainPhotoId" WHERE "userId"=2 ORDER BY animals.id DESC;
     `, [userId])
 }
 
