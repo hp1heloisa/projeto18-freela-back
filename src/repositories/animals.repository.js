@@ -77,3 +77,9 @@ export function alterAtivation(id, active) {
         UPDATE animals SET active=$1 WHERE id=$2;
     `, [active, id]);
 }
+
+export function getModelsByBreedDB(id) {
+    return db.query(`
+        SELECT * FROM animals WHERE "breedId"=$1 ORDER BY id DESC;
+    `, [id]);
+}
