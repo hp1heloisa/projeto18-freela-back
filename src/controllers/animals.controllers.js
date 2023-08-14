@@ -11,6 +11,16 @@ export async function getBreeds(req, res) {
     }
 }
 
+export async function getBreedById(req, res){
+    const { id } = req.params;
+    try {
+        const breeds = await getBreedsByIdDB();
+        res.send(breeds.rows);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
 export async function postNewModel(req, res){
     const {name, breedId, description, mainPhoto, photos} = req.body;
     const { userId } = res.locals;
@@ -78,7 +88,10 @@ export async function activationModel(req, res) {
 
         if (modelInfo.rowCount == 0) return res.sendStatus(404);
 
-        if (modelInfo.rows[0].userId != userId) return res.sendStatus(401);
+        console.log(modelInfo.rows);
+        console.log(userId)
+
+        if (modelInfo.rows[0].tutorId != userId) return res.sendStatus(401);
 
         if  (modelInfo.rows[0].active){
             active = false;

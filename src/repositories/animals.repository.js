@@ -4,6 +4,10 @@ export function getBreedsDB(){
     return db.query(`SELECT * FROM breeds ORDER BY breed;`);
 }
 
+export function getBreedsByIdDB(id){
+    return db.query(`SELECT * FROM breeds WHERE id=$1 ORDER BY breed;`, [id]);
+}
+
 export function createNewModelDB(name, breedId, description, userId){
     return db.query(`
         INSERT INTO animals (name, "breedId", description, "userId") VALUES ($1,$2,$3,$4);
@@ -44,12 +48,12 @@ export function insertPhotosDB(photos, animalId){
 
 export function getModelByIdDB(id) {
     return db.query(`           
-        SELECT animals.id, animals.name, breeds.breed, animals.description, users.name as tutor, users.email,
-        users."phoneNumber", animals.active, animals."mainPhotoId", array_agg(json_build_object('id', 
+        SELECT animals.id, animals.name, breeds.breed, animals.description, users.id as "tutorId",users.name as tutor, 
+        users.email, users."phoneNumber", animals.active, animals."mainPhotoId", array_agg(json_build_object('id', 
         photos.id, 'urlImage',photos."urlImage")) as "animalPhotos" FROM photos JOIN animals ON 
         animals.id=photos."animalId" JOIN breeds ON animals."breedId" = breeds.id JOIN users ON 
         animals."userId"=users.id WHERE "animalId" = $1 GROUP BY animals.id, breeds.breed, users.name, 
-        users.email, users."phoneNumber";
+        users.email, users."phoneNumber", users.id;
     `, [id])
 }
 
