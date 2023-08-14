@@ -79,7 +79,9 @@ export function alterAtivation(id, active) {
 }
 
 export function getModelsByBreedDB(id) {
-    return db.query(`
-        SELECT * FROM animals WHERE "breedId"=$1 ORDER BY id DESC;
+    return db.query(`    
+        SELECT animals.*, photos."urlImage" as "mainImage" FROM animals JOIN
+        photos ON animals."mainPhotoId" = photos.id WHERE "breedId"=$1 ORDER BY 
+        animals.id DESC;
     `, [id]);
 }
