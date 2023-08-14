@@ -120,7 +120,7 @@ export async function getModelsByBreed(req, res) {
 }
 
 export async function getModelPesquisa(req, res) {
-    const { pesquisa } = req.body;
+    const { pesquisa } = req.params;
     try {
         const models = await getModelPesquisaDB(pesquisa);
         res.send(models.rows);

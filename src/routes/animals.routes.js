@@ -13,6 +13,6 @@ animalsRouter.get('/models/:id', getModelById);
 animalsRouter.get('/models', getAllModels);
 animalsRouter.put('/models/:id/activation', validateAuth, activationModel);
 animalsRouter.get('/models/breed/:id', getModelsByBreed);
-animalsRouter.get('/search', getModelPesquisa);
+animalsRouter.get('/search/:pesquisa', getModelPesquisa);
 
 export default animalsRouter;
