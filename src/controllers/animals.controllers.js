@@ -1,4 +1,5 @@
 import { alterAtivation, createNewModelDB, getBreedsDB, getMainPhotoIdDB, getModelByIdDB,
+         getModelPesquisaDB,
          getModelsByBreedDB,
          getModelsByUserIdDB, getModelsDB, getNewModelIdDB, insertMainPhotoDB, insertPhotosDB, 
          updateMainPhotoAnimalDB } from "../repositories/animals.repository.js";
@@ -115,5 +116,16 @@ export async function getModelsByBreed(req, res) {
         res.send(modelsByBreed.rows);
     } catch (error) {
         res.status(500).send(error.message);
+    }
+}
+
+export async function getModelPesquisa(req, res) {
+    const { pesquisa } = req.body;
+    try {
+        const models = await getModelPesquisaDB(pesquisa);
+        res.send(models.rows);
+
+    } catch (error) {
+        
     }
 }

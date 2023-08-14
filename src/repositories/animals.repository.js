@@ -85,3 +85,12 @@ export function getModelsByBreedDB(id) {
         animals.id DESC;
     `, [id]);
 }
+
+export function getModelPesquisaDB(pesquisa) {
+    return db.query(`
+        SELECT animals.*, photos."urlImage" as "mainImage" FROM animals JOIN
+        photos ON animals."mainPhotoId" = photos.id WHERE animals.name LIKE $1
+        OR animals.description LIKE $1 
+        ORDER BY animals.id DESC;
+    `, [`%${pesquisa}%`])
+}
